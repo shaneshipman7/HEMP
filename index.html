@@ -1,3 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Texas THC Response Builder</title>
+
+<style>
+body {
+  font-family: Arial, sans-serif;
+  max-width: 750px;
+  margin: auto;
+  padding: 20px;
+  background: #f4f4f4;
+}
+h1, h2 { text-align: center; }
+
+.box {
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+}
+
+textarea {
+  height: 240px;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  cursor: pointer;
+  border: none;
+  border-radius: 6px;
+}
+
+.primary { background: #2c7be5; color: white; }
+.secondary { background: #28a745; color: white; }
+.copy { background: #6c757d; color: white; }
+
+a.button-link {
+  display: block;
+  text-align: center;
+  padding: 12px;
+  background: #ff9800;
+  color: white;
+  text-decoration: none;
+  border-radius: 6px;
+  margin-top: 10px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🚨 Texas THC Response Builder</h1>
+
+<div class="box">
+  <h2>Takes Less Than 60 Seconds</h2>
+  <p>Most people won’t do this — which is why it matters when you do.</p>
+
+  <a class="button-link" href="https://wrm.capitol.texas.gov/home" target="_blank">
+    Find Your Representatives
+  </a>
+</div>
+
+<div class="box">
+  <h2>Your Info</h2>
+
+  <label>Your Name</label>
+  <input id="name" placeholder="John Doe">
+
+  <label>Your City</label>
+  <input id="city" placeholder="Garland">
+
+  <label>Representative / Senator Name</label>
+  <input id="rep" placeholder="Rep. Smith">
+
+  <label>Tone</label>
+  <select id="tone">
+    <option value="neutral">Neutral</option>
+    <option value="firm">Firm</option>
+    <option value="urgent">Urgent</option>
+  </select>
+
+  <label>What matters to you?</label>
+  <div>
+    <input type="checkbox" id="jobs"> Jobs / Employment<br>
+    <input type="checkbox" id="business"> Small Businesses<br>
+    <input type="checkbox" id="access"> Consumer Access<br>
+    <input type="checkbox" id="fairness"> Fair Regulation<br>
+  </div>
+
+  <label>Personal Note (optional)</label>
+  <input id="personal" placeholder="This impacts my community because...">
+</div>
+
+<div class="box">
+  <h2>Your Message</h2>
+
+  <button class="primary" onclick="generate()">Generate Message</button>
+
+  <textarea id="output" placeholder="Your message will appear here..."></textarea>
+
+  <button class="copy" onclick="copyText()">Copy</button>
+  <button class="secondary" onclick="openEmail()">Open Email App</button>
+</div>
+
 <script>
 function generate() {
   let name = document.getElementById("name").value;
@@ -9,52 +125,37 @@ function generate() {
   let points = [];
 
   if (document.getElementById("jobs").checked)
-    points.push("job losses across Texas");
+    points.push("job losses");
   if (document.getElementById("business").checked)
-    points.push("serious harm to small businesses");
+    points.push("harm to small businesses");
   if (document.getElementById("access").checked)
-    points.push("reduced access for consumers");
+    points.push("reduced consumer access");
   if (document.getElementById("fairness").checked)
-    points.push("a lack of clear and consistent regulation");
+    points.push("a lack of clear regulation");
 
   let impact = points.length
-    ? "These changes may result in " + points.join(", ") + "."
-    : "These changes are already creating uncertainty across Texas.";
-
-  // 🔥 New: Fee / Pay-to-play section
-  let fees = `
-I am also concerned that the current fee structure creates a barrier to entry that feels punitive and effectively becomes a “pay-to-play” system, which disproportionately hurts smaller, locally owned businesses while favoring larger operators.
-`;
-
-  // 🔥 New: Safety comparison (carefully worded)
-  let safety = `
-Additionally, it is difficult to understand why hemp-derived products are being treated more strictly when other widely available substances — such as alcohol and over-the-counter medications like acetaminophen — are known to carry significant health risks, including documented overdose cases. A more consistent, evidence-based approach to regulation would better serve the public.
-`;
+    ? "This change may result in " + points.join(", ") + "."
+    : "This change is creating uncertainty across Texas.";
 
   let toneText =
     tone === "urgent"
-      ? "I urge immediate attention and action on this issue."
+      ? "I urge immediate action on this issue."
       : tone === "firm"
       ? "I strongly encourage action on this issue."
-      : "I respectfully ask for your attention to this matter.";
+      : "I respectfully ask for your attention.";
 
   let message = `Dear ${rep},
 
-I am a constituent from ${city}, Texas, writing regarding the recent change to include THCA in total THC calculations.
+I am a constituent from ${city}, Texas, regarding the recent THC calculation change.
 
 ${impact}
 
-${fees}
+${personal ? personal + "\\n\\n" : ""}${toneText}
 
-${safety}
-
-${personal ? personal + "\n\n" : ""}${toneText}
-
-I respectfully ask for:
+I ask for:
 - Clear legislative guidance
 - A reasonable transition period
-- A review of the current fee structure and its impact on small businesses
-- Consideration of the broader economic impact
+- Consideration of economic impact
 
 Thank you for your time and service.
 
@@ -63,4 +164,21 @@ ${name}`;
 
   document.getElementById("output").value = message;
 }
+
+function copyText() {
+  let text = document.getElementById("output");
+  text.select();
+  document.execCommand("copy");
+  alert("Copied!");
+}
+
+function openEmail() {
+  let body = encodeURIComponent(document.getElementById("output").value);
+  let subject = encodeURIComponent("Concern About THC Regulation Changes");
+
+  window.location.href = `mailto:?subject=${subject}&body=${body}`;
+}
 </script>
+
+</body>
+</html>
