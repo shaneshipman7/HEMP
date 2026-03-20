@@ -6,71 +6,114 @@
 <title>Texas THC Response Builder</title>
 
 <style>
-body {
-  font-family: Arial, sans-serif;
-  max-width: 750px;
-  margin: auto;
-  padding: 20px;
-  background: #f4f4f4;
-}
-h1, h2 { text-align: center; }
+  body {
+    font-family: Arial, sans-serif;
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #f4f4f4;
+    line-height: 1.5;
+  }
 
-.box {
-  background: white;
-  padding: 15px;
-  border-radius: 10px;
-  margin-bottom: 20px;
-}
+  h1, h2 {
+    text-align: center;
+    margin-bottom: 0.8em;
+  }
 
-input, select, textarea {
-  width: 100%;
-  padding: 10px;
-  margin-top: 5px;
-  margin-bottom: 15px;
-  font-size: 16px;
-}
+  .box {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 24px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
 
-textarea {
-  height: 260px;
-}
+  label {
+    display: block;
+    margin: 12px 0 4px;
+    font-weight: 600;
+    color: #333;
+  }
 
-button {
-  width: 100%;
-  padding: 12px;
-  margin-top: 10px;
-  cursor: pointer;
-  border: none;
-  border-radius: 6px;
-  font-size: 16px;
-}
+  input, select, textarea {
+    width: 100%;
+    padding: 10px 12px;
+    margin-top: 4px;
+    margin-bottom: 16px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+  }
 
-.primary { background: #2c7be5; color: white; }
-.secondary { background: #28a745; color: white; }
-.copy { background: #6c757d; color: white; }
+  textarea {
+    height: 260px;
+    resize: vertical;
+    font-family: inherit;
+  }
 
-a.button-link {
-  display: block;
-  text-align: center;
-  padding: 12px;
-  background: #ff9800;
-  color: white;
-  text-decoration: none;
-  border-radius: 6px;
-  margin-top: 10px;
-}
+  button {
+    width: 100%;
+    padding: 14px;
+    margin: 10px 0 6px;
+    cursor: pointer;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 600;
+  }
 
-/* ✅ FIXED CHECKBOX ALIGNMENT */
-.checkbox-group label {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 8px;
-  cursor: pointer;
-}
+  .primary   { background: #2c7be5; color: white; }
+  .secondary { background: #28a745; color: white; }
+  .copy      { background: #6c757d; color: white; }
 
-.checkbox-group input[type="checkbox"] {
-  width: auto;
-}
+  a.button-link {
+    display: block;
+    text-align: center;
+    padding: 14px;
+    background: #ff9800;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    margin: 16px 0;
+    font-weight: 600;
+  }
+
+  /* ──────────────────────────────────────── */
+  /* IMPROVED CHECKBOX ALIGNMENT & STYLE      */
+  .checkbox-group {
+    margin: 12px 0 24px 0;
+  }
+
+  .checkbox-group label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    user-select: none;
+    padding: 6px 8px;
+    border-radius: 6px;
+    transition: background 0.15s;
+  }
+
+  .checkbox-group label:hover {
+    background: rgba(44, 123, 229, 0.08);
+  }
+
+  .checkbox-group input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    margin: 0;
+    flex-shrink: 0;
+    accent-color: #2c7be5;
+  }
+  /* ──────────────────────────────────────── */
+
+  @media (max-width: 500px) {
+    body { padding: 16px; }
+    .box { padding: 16px; }
+  }
 </style>
 </head>
 
@@ -82,7 +125,7 @@ a.button-link {
   <h2>Takes Less Than 60 Seconds</h2>
   <p>Most people won’t do this — which is exactly why it matters when you do.</p>
 
-  <a class="button-link" href="https://wrm.capitol.texas.gov/home" target="_blank">
+  <a class="button-link" href="https://wrm.capitol.texas.gov/home" target="_blank" rel="noopener noreferrer">
     🔎 Find Your Representatives
   </a>
 </div>
@@ -90,28 +133,28 @@ a.button-link {
 <div class="box">
   <h2>Your Info</h2>
 
-  <label>Your Name</label>
-  <input id="name" placeholder="Tap and type your name">
+  <label for="name">Your Name</label>
+  <input id="name" placeholder="Tap and type your name" required>
 
-  <label>Your City</label>
+  <label for="city">Your City</label>
   <input id="city" value="Garland" onfocus="this.select()">
 
-  <label>Representative / Senator Name</label>
+  <label for="rep">Representative / Senator Name</label>
   <input id="rep" value="Rep. Angie Chen Button / Sen. Bob Hall" onfocus="this.select()">
 
-  <label>Your ZIP Code (optional)</label>
+  <label for="zip">Your ZIP Code (optional — can help confirm reps)</label>
   <input id="zip" placeholder="Enter ZIP" onfocus="this.select()">
 
   <button onclick="lookupZip()" class="copy">Use ZIP to Find Reps</button>
 
-  <label>Tone</label>
+  <label for="tone">Tone</label>
   <select id="tone">
     <option value="neutral">Neutral</option>
     <option value="firm">Firm</option>
     <option value="urgent">Urgent</option>
   </select>
 
-  <label>What matters to you?</label>
+  <label>What matters to you most?</label>
   <div class="checkbox-group">
     <label><input type="checkbox" id="jobs"> Jobs / Employment</label>
     <label><input type="checkbox" id="business" checked> Small Businesses</label>
@@ -121,7 +164,7 @@ a.button-link {
     <label><input type="checkbox" id="safety"> Inconsistent Safety Standards</label>
   </div>
 
-  <label>Personal Note (optional)</label>
+  <label for="personal">Personal Note (optional)</label>
   <input id="personal" placeholder="This impacts my community because...">
 </div>
 
@@ -132,7 +175,7 @@ a.button-link {
 
   <textarea id="output" placeholder="Your message will appear here..."></textarea>
 
-  <button class="copy" onclick="copyText()">Copy</button>
+  <button class="copy" onclick="copyText()">Copy to Clipboard</button>
   <button class="secondary" onclick="openEmail()">Open Email App</button>
   <button class="secondary" onclick="sendGarland()">Send to Garland Representatives</button>
 </div>
@@ -141,39 +184,29 @@ a.button-link {
 function lookupZip() {
   let zip = document.getElementById("zip").value.trim();
   if (!zip) {
-    alert("Enter a ZIP code first.");
+    alert("Please enter a ZIP code first.");
     return;
   }
-  window.open("https://wrm.capitol.texas.gov/home", "_blank");
+  window.open("https://wrm.capitol.texas.gov/home", "_blank", "noopener,noreferrer");
 }
 
 function generate() {
-  let name = document.getElementById("name").value.trim();
-  let city = document.getElementById("city").value.trim();
-  let rep = document.getElementById("rep").value.trim();
-  let tone = document.getElementById("tone").value;
+  let name   = document.getElementById("name").value.trim()   || "A concerned constituent";
+  let city   = document.getElementById("city").value.trim()   || "my community";
+  let rep    = document.getElementById("rep").value.trim()    || "Representative";
+  let tone   = document.getElementById("tone").value;
   let personal = document.getElementById("personal").value.trim();
 
-  if (!rep) rep = "Representative";
-  if (!city) city = "my community";
-  if (!name) name = "A concerned constituent";
-
   let points = [];
-
-  if (document.getElementById("jobs").checked)
-    points.push("job losses across Texas");
-  if (document.getElementById("business").checked)
-    points.push("serious harm to small businesses");
-  if (document.getElementById("access").checked)
-    points.push("reduced consumer access");
-  if (document.getElementById("fairness").checked)
-    points.push("a lack of clear and consistent regulation");
+  if (document.getElementById("jobs").checked)     points.push("job losses across Texas");
+  if (document.getElementById("business").checked) points.push("serious harm to small businesses");
+  if (document.getElementById("access").checked)   points.push("reduced consumer access");
+  if (document.getElementById("fairness").checked) points.push("a lack of clear and consistent regulation");
 
   function formatList(arr) {
+    if (arr.length === 0) return "";
     if (arr.length === 1) return arr[0];
-    if (arr.length > 1)
-      return arr.slice(0, -1).join(", ") + ", and " + arr.slice(-1);
-    return "";
+    return arr.slice(0, -1).join(", ") + ", and " + arr[arr.length - 1];
   }
 
   let impact = points.length
@@ -188,32 +221,29 @@ I am also concerned that the current fee structure creates a barrier to entry th
 Additionally, it is difficult to understand why hemp-derived products are treated more strictly than substances like alcohol or acetaminophen, which have documented health risks.
 ` : "";
 
-  let toneText =
-    tone === "urgent"
-      ? "I urge immediate action on this issue."
-      : tone === "firm"
-      ? "I strongly encourage action on this issue."
-      : "I respectfully ask for your attention.";
+  let toneText = tone === "urgent" ? "I urge immediate action on this issue."
+               : tone === "firm"   ? "I strongly encourage action on this issue."
+               : "I respectfully ask for your attention.";
 
   let personalText = personal ? personal + "\n\n" : "";
 
   let message = `Dear ${rep},
 
-I am a constituent from ${city}, Texas, regarding the recent THC calculation change.
+I am a constituent from ${city}, Texas, writing regarding the recent THC calculation change.
 
 ${impact}
 
-${feesText}${safetyText}
+\( {feesText} \){safetyText}
 
-${personalText}${toneText}
+\( {personalText} \){toneText}
 
-I ask for:
-- Clear legislative guidance
-- A reasonable transition period
-- Consideration of economic impact
-${document.getElementById("fees").checked ? "- A review of the fee structure affecting small businesses\n" : ""}
+I respectfully ask for:
+• Clear legislative guidance
+• A reasonable transition period
+• Consideration of economic impact
+${document.getElementById("fees").checked ? "• A review of the fee structure affecting small businesses\n" : ""}
 
-Thank you for your time and service.
+Thank you for your time and service to our community.
 
 Sincerely,
 ${name}`;
@@ -222,32 +252,31 @@ ${name}`;
 }
 
 function copyText() {
-  let text = document.getElementById("output");
-  text.select();
+  let textarea = document.getElementById("output");
+  textarea.select();
+  textarea.setSelectionRange(0, 99999); // mobile
   document.execCommand("copy");
-  alert("Copied!");
+  alert("Message copied to clipboard!");
 }
 
 function openEmail() {
   let body = encodeURIComponent(document.getElementById("output").value);
-  let subject = encodeURIComponent("THC Regulation Concern");
-  window.location.href = `mailto:?subject=${subject}&body=${body}`;
+  let subject = encodeURIComponent("Concern Regarding THC Regulation Changes");
+  window.location.href = `mailto:?subject=\( {subject}&body= \){body}`;
 }
 
 function sendGarland() {
-  let message = document.getElementById("output").value;
-
+  let message = document.getElementById("output").value.trim();
   if (!message) {
-    alert("Generate your message first.");
+    alert("Please generate your message first.");
     return;
   }
-
   let body = encodeURIComponent(message);
-  let subject = encodeURIComponent("THC Regulation Concern");
-
+  let subject = encodeURIComponent("Concern Regarding THC Regulation Changes");
   window.location.href =
-    "mailto:angie.button@house.texas.gov,bob.hall@senate.texas.gov?subject=" +
-    subject + "&body=" + body;
+    "mailto:angie.button@house.texas.gov,bob.hall@senate.texas.gov" +
+    "?subject=" + subject +
+    "&body=" + body;
 }
 </script>
 
