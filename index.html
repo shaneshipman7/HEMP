@@ -27,6 +27,7 @@ input, select, textarea {
   padding: 10px;
   margin-top: 5px;
   margin-bottom: 15px;
+  font-size: 16px;
 }
 
 textarea {
@@ -40,6 +41,7 @@ button {
   cursor: pointer;
   border: none;
   border-radius: 6px;
+  font-size: 16px;
 }
 
 .primary { background: #2c7be5; color: white; }
@@ -83,13 +85,13 @@ a.button-link {
   <input id="name" placeholder="Tap and type your name">
 
   <label>Your City</label>
-  <input id="city" value="Garland" onclick="this.select()">
+  <input id="city" value="Garland" onfocus="this.select()">
 
   <label>Representative / Senator Name</label>
-  <input id="rep" value="Rep. Angie Chen Button / Sen. Bob Hall" onclick="this.select()">
+  <input id="rep" value="Rep. Angie Chen Button / Sen. Bob Hall" onfocus="this.select()">
 
   <label>Your ZIP Code (optional)</label>
-  <input id="zip" placeholder="75040" onclick="this.select()">
+  <input id="zip" placeholder="Tap and enter ZIP" onfocus="this.select()">
 
   <button onclick="lookupZip()" class="copy">Use ZIP to Find Reps</button>
 
