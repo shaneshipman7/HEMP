@@ -1,0 +1,66 @@
+<script>
+function generate() {
+  let name = document.getElementById("name").value;
+  let city = document.getElementById("city").value;
+  let rep = document.getElementById("rep").value;
+  let tone = document.getElementById("tone").value;
+  let personal = document.getElementById("personal").value;
+
+  let points = [];
+
+  if (document.getElementById("jobs").checked)
+    points.push("job losses across Texas");
+  if (document.getElementById("business").checked)
+    points.push("serious harm to small businesses");
+  if (document.getElementById("access").checked)
+    points.push("reduced access for consumers");
+  if (document.getElementById("fairness").checked)
+    points.push("a lack of clear and consistent regulation");
+
+  let impact = points.length
+    ? "These changes may result in " + points.join(", ") + "."
+    : "These changes are already creating uncertainty across Texas.";
+
+  // 🔥 New: Fee / Pay-to-play section
+  let fees = `
+I am also concerned that the current fee structure creates a barrier to entry that feels punitive and effectively becomes a “pay-to-play” system, which disproportionately hurts smaller, locally owned businesses while favoring larger operators.
+`;
+
+  // 🔥 New: Safety comparison (carefully worded)
+  let safety = `
+Additionally, it is difficult to understand why hemp-derived products are being treated more strictly when other widely available substances — such as alcohol and over-the-counter medications like acetaminophen — are known to carry significant health risks, including documented overdose cases. A more consistent, evidence-based approach to regulation would better serve the public.
+`;
+
+  let toneText =
+    tone === "urgent"
+      ? "I urge immediate attention and action on this issue."
+      : tone === "firm"
+      ? "I strongly encourage action on this issue."
+      : "I respectfully ask for your attention to this matter.";
+
+  let message = `Dear ${rep},
+
+I am a constituent from ${city}, Texas, writing regarding the recent change to include THCA in total THC calculations.
+
+${impact}
+
+${fees}
+
+${safety}
+
+${personal ? personal + "\n\n" : ""}${toneText}
+
+I respectfully ask for:
+- Clear legislative guidance
+- A reasonable transition period
+- A review of the current fee structure and its impact on small businesses
+- Consideration of the broader economic impact
+
+Thank you for your time and service.
+
+Sincerely,
+${name}`;
+
+  document.getElementById("output").value = message;
+}
+</script>
