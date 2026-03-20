@@ -80,62 +80,38 @@
   }
 
   /* ──────────────────────────────────────── */
-  /* CUSTOM CHECKBOX - BEST ALIGNMENT FIX     */
+  /* SIMPLE, CROSS-BROWSER CHECKBOX ALIGNMENT */
   .checkbox-group {
     margin: 16px 0 24px 0;
   }
 
   .checkbox-group label {
     display: flex;
-    align-items: flex-start;
-    gap: 12px;
+    align-items: center;
+    gap: 10px;
     margin-bottom: 14px;
     cursor: pointer;
     user-select: none;
-    line-height: 1.45;
-    padding: 4px 0;
+    line-height: 1.4;
   }
 
   .checkbox-group label:hover {
     background: rgba(44, 123, 229, 0.06);
     border-radius: 6px;
+    padding: 4px 8px;
   }
 
   .checkbox-group input[type="checkbox"] {
-    appearance: none;
     width: 20px;
     height: 20px;
-    margin: 3px 0 0 0;          /* tiny top nudge for perfect centering */
+    margin: 0;
     flex-shrink: 0;
-    border: 2px solid #6c757d;
-    border-radius: 4px;
-    background: white;
-    position: relative;
-    cursor: pointer;
-    transition: all 0.12s;
-  }
-
-  .checkbox-group input[type="checkbox"]:checked {
-    background: #2c7be5;
-    border-color: #2c7be5;
-  }
-
-  .checkbox-group input[type="checkbox"]:checked::after {
-    content: "✔";
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: -1px;                 /* fine-tune checkmark position if needed */
-    color: white;
-    font-size: 15px;
-    line-height: 18px;
-    text-align: center;
-    font-weight: bold;
+    accent-color: #2c7be5;
   }
 
   .checkbox-group input[type="checkbox"]:focus {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(44, 123, 229, 0.3);
+    outline: 2px solid #2c7be5;
+    outline-offset: 2px;
   }
   /* ──────────────────────────────────────── */
 
@@ -210,6 +186,7 @@
 </div>
 
 <script>
+// Your existing script remains unchanged
 function lookupZip() {
   let zip = document.getElementById("zip").value.trim();
   if (!zip) {
