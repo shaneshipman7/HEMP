@@ -58,6 +58,19 @@ a.button-link {
   border-radius: 6px;
   margin-top: 10px;
 }
+
+/* ✅ FIXED CHECKBOX ALIGNMENT */
+.checkbox-group label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  cursor: pointer;
+}
+
+.checkbox-group input[type="checkbox"] {
+  width: auto;
+}
 </style>
 </head>
 
@@ -69,12 +82,8 @@ a.button-link {
   <h2>Takes Less Than 60 Seconds</h2>
   <p>Most people won’t do this — which is exactly why it matters when you do.</p>
 
-  <p>
-    Recent THC rule changes may impact local businesses across Texas — including shops in Garland — along with many others statewide.
-  </p>
-
   <a class="button-link" href="https://wrm.capitol.texas.gov/home" target="_blank">
-    🔎 Find Your Representatives (Official Lookup)
+    🔎 Find Your Representatives
   </a>
 </div>
 
@@ -91,7 +100,7 @@ a.button-link {
   <input id="rep" value="Rep. Angie Chen Button / Sen. Bob Hall" onfocus="this.select()">
 
   <label>Your ZIP Code (optional)</label>
-  <input id="zip" placeholder="Tap and enter ZIP" onfocus="this.select()">
+  <input id="zip" placeholder="Enter ZIP" onfocus="this.select()">
 
   <button onclick="lookupZip()" class="copy">Use ZIP to Find Reps</button>
 
@@ -103,17 +112,17 @@ a.button-link {
   </select>
 
   <label>What matters to you?</label>
-  <div>
-    <input type="checkbox" id="jobs"> Jobs / Employment<br>
-    <input type="checkbox" id="business" checked> Small Businesses<br>
-    <input type="checkbox" id="access"> Consumer Access<br>
-    <input type="checkbox" id="fairness"> Fair Regulation<br>
-    <input type="checkbox" id="fees" checked> Excessive Fees / Barriers to Entry<br>
-    <input type="checkbox" id="safety"> Inconsistent Safety Standards<br>
+  <div class="checkbox-group">
+    <label><input type="checkbox" id="jobs"> Jobs / Employment</label>
+    <label><input type="checkbox" id="business" checked> Small Businesses</label>
+    <label><input type="checkbox" id="access"> Consumer Access</label>
+    <label><input type="checkbox" id="fairness"> Fair Regulation</label>
+    <label><input type="checkbox" id="fees" checked> Excessive Fees / Barriers to Entry</label>
+    <label><input type="checkbox" id="safety"> Inconsistent Safety Standards</label>
   </div>
 
   <label>Personal Note (optional)</label>
-  <input id="personal" placeholder="This impacts my local store or community because...">
+  <input id="personal" placeholder="This impacts my community because...">
 </div>
 
 <div class="box">
@@ -125,7 +134,7 @@ a.button-link {
 
   <button class="copy" onclick="copyText()">Copy</button>
   <button class="secondary" onclick="openEmail()">Open Email App</button>
-  <button class="secondary" onclick="sendGarland()">Send to Garland Representatives (1 Tap)</button>
+  <button class="secondary" onclick="sendGarland()">Send to Garland Representatives</button>
 </div>
 
 <script>
@@ -161,9 +170,10 @@ function generate() {
     points.push("a lack of clear and consistent regulation");
 
   function formatList(arr) {
-    if (arr.length === 0) return "";
     if (arr.length === 1) return arr[0];
-    return arr.slice(0, -1).join(", ") + ", and " + arr.slice(-1);
+    if (arr.length > 1)
+      return arr.slice(0, -1).join(", ") + ", and " + arr.slice(-1);
+    return "";
   }
 
   let impact = points.length
@@ -171,16 +181,16 @@ function generate() {
     : "These changes are already creating uncertainty across Texas.";
 
   let feesText = document.getElementById("fees").checked ? `
-I am also concerned that the current fee structure creates a barrier to entry that feels punitive and effectively becomes a “pay-to-play” system. This disproportionately impacts smaller, locally owned businesses and limits fair competition.
+I am also concerned that the current fee structure creates a barrier to entry that feels punitive and effectively becomes a “pay-to-play” system. This disproportionately impacts smaller businesses.
 ` : "";
 
   let safetyText = document.getElementById("safety").checked ? `
-Additionally, it is difficult to understand why hemp-derived products are being treated more strictly when other widely available substances — such as alcohol and over-the-counter medications like acetaminophen — are known to carry significant health risks, including documented overdose cases.
+Additionally, it is difficult to understand why hemp-derived products are treated more strictly than substances like alcohol or acetaminophen, which have documented health risks.
 ` : "";
 
   let toneText =
     tone === "urgent"
-      ? "I urge immediate attention and action on this issue."
+      ? "I urge immediate action on this issue."
       : tone === "firm"
       ? "I strongly encourage action on this issue."
       : "I respectfully ask for your attention.";
@@ -189,7 +199,7 @@ Additionally, it is difficult to understand why hemp-derived products are being 
 
   let message = `Dear ${rep},
 
-I am a constituent from ${city}, Texas, writing regarding the recent change to include THCA in total THC calculations.
+I am a constituent from ${city}, Texas, regarding the recent THC calculation change.
 
 ${impact}
 
@@ -197,11 +207,11 @@ ${feesText}${safetyText}
 
 ${personalText}${toneText}
 
-I respectfully ask for:
+I ask for:
 - Clear legislative guidance
 - A reasonable transition period
 - Consideration of economic impact
-${document.getElementById("fees").checked ? "- A review of the current fee structure and its impact on small businesses\n" : ""}
+${document.getElementById("fees").checked ? "- A review of the fee structure affecting small businesses\n" : ""}
 
 Thank you for your time and service.
 
@@ -220,7 +230,7 @@ function copyText() {
 
 function openEmail() {
   let body = encodeURIComponent(document.getElementById("output").value);
-  let subject = encodeURIComponent("Concern About THC Regulation Changes");
+  let subject = encodeURIComponent("THC Regulation Concern");
   window.location.href = `mailto:?subject=${subject}&body=${body}`;
 }
 
@@ -233,11 +243,11 @@ function sendGarland() {
   }
 
   let body = encodeURIComponent(message);
-  let subject = encodeURIComponent("Concern About THC Regulation Changes");
+  let subject = encodeURIComponent("THC Regulation Concern");
 
-  let emails = "angie.button@house.texas.gov,bob.hall@senate.texas.gov";
-
-  window.location.href = `mailto:${emails}?subject=${subject}&body=${body}`;
+  window.location.href =
+    "mailto:angie.button@house.texas.gov,bob.hall@senate.texas.gov?subject=" +
+    subject + "&body=" + body;
 }
 </script>
 
