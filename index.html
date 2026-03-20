@@ -68,11 +68,11 @@ a.button-link {
   <p>Most people won’t do this — which is exactly why it matters when you do.</p>
 
   <p>
-    Recent THC rule changes may impact local businesses across Texas — including shops in Garland like Gas Pipe and Bee Bippy — along with many others statewide.
+    Recent THC rule changes may impact local businesses across Texas — including shops in Garland — along with many others statewide.
   </p>
 
   <a class="button-link" href="https://wrm.capitol.texas.gov/home" target="_blank">
-    Find Your Representatives
+    🔎 Find Your Representatives (Official Lookup)
   </a>
 </div>
 
@@ -80,13 +80,18 @@ a.button-link {
   <h2>Your Info</h2>
 
   <label>Your Name</label>
-  <input id="name" placeholder="John Doe">
+  <input id="name" placeholder="Tap and type your name">
 
   <label>Your City</label>
-  <input id="city" placeholder="Garland">
+  <input id="city" value="Garland" onclick="this.select()">
 
   <label>Representative / Senator Name</label>
-  <input id="rep" placeholder="Rep. Smith">
+  <input id="rep" value="Rep. Angie Chen Button / Sen. Bob Hall" onclick="this.select()">
+
+  <label>Your ZIP Code (optional)</label>
+  <input id="zip" placeholder="75040" onclick="this.select()">
+
+  <button onclick="lookupZip()" class="copy">Use ZIP to Find Reps</button>
 
   <label>Tone</label>
   <select id="tone">
@@ -121,12 +126,25 @@ a.button-link {
 </div>
 
 <script>
+function lookupZip() {
+  let zip = document.getElementById("zip").value.trim();
+  if (!zip) {
+    alert("Enter a ZIP code first.");
+    return;
+  }
+  window.open("https://wrm.capitol.texas.gov/home", "_blank");
+}
+
 function generate() {
-  let name = document.getElementById("name").value;
-  let city = document.getElementById("city").value;
-  let rep = document.getElementById("rep").value;
+  let name = document.getElementById("name").value.trim();
+  let city = document.getElementById("city").value.trim();
+  let rep = document.getElementById("rep").value.trim();
   let tone = document.getElementById("tone").value;
-  let personal = document.getElementById("personal").value;
+  let personal = document.getElementById("personal").value.trim();
+
+  if (!rep) rep = "Representative";
+  if (!city) city = "my community";
+  if (!name) name = "A concerned constituent";
 
   let points = [];
 
@@ -135,12 +153,18 @@ function generate() {
   if (document.getElementById("business").checked)
     points.push("serious harm to small businesses");
   if (document.getElementById("access").checked)
-    points.push("reduced access for consumers");
+    points.push("reduced consumer access");
   if (document.getElementById("fairness").checked)
     points.push("a lack of clear and consistent regulation");
 
+  function formatList(arr) {
+    if (arr.length === 0) return "";
+    if (arr.length === 1) return arr[0];
+    return arr.slice(0, -1).join(", ") + ", and " + arr.slice(-1);
+  }
+
   let impact = points.length
-    ? "These changes may result in " + points.join(", ") + "."
+    ? "These changes may result in " + formatList(points) + "."
     : "These changes are already creating uncertainty across Texas.";
 
   let feesText = "";
@@ -164,6 +188,8 @@ Additionally, it is difficult to understand why hemp-derived products are being 
       ? "I strongly encourage action on this issue."
       : "I respectfully ask for your attention to this matter.";
 
+  let personalText = personal ? personal + "\n\n" : "";
+
   let message = `Dear ${rep},
 
 I am a constituent from ${city}, Texas, writing regarding the recent change to include THCA in total THC calculations.
@@ -172,13 +198,13 @@ ${impact}
 
 ${feesText}${safetyText}
 
-${personal ? personal + "\\n\\n" : ""}${toneText}
+${personalText}${toneText}
 
 I respectfully ask for:
 - Clear legislative guidance
 - A reasonable transition period
 - Consideration of economic impact
-${document.getElementById("fees").checked ? "- A review of the current fee structure and its impact on small businesses" : ""}
+${document.getElementById("fees").checked ? "- A review of the current fee structure and its impact on small businesses\n" : ""}
 
 Thank you for your time and service.
 
