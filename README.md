@@ -5,7 +5,7 @@ Save Texas Hemp
 A simple tool to help Texans quickly contact their state representatives about recent THC regulation changes.
 
 ## ✅ Use It Here:
-👉 https://YOUR-USERNAME.github.io/YOUR-REPO-NAME/
+👉 https://shaneshipman7.github.io/HEMP/
 
 ## ⏱ Takes Less Than 60 Seconds
 
